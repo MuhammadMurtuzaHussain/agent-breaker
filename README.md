@@ -9,14 +9,14 @@ A red-team playbook for breaking LLM agents — tool-calling, RAG, MCP and memor
 - Verbatim worked payloads from sanctioned CTF runs
 - What reliably fails (obfuscation, encoding) and why
 
-**Companion skill:** [AgentArmor](https://github.com/REPLACE_ME/agent-armor) — the defensive checklist for the same attack classes.
+**Companion skill:** [AgentArmor](https://github.com/MuhammadMurtuzaHussain/agent-armor) — the defensive checklist for the same attack classes.
 
 ## Install
 
 As a Claude Skill:
 
 ```bash
-git clone https://github.com/REPLACE_ME/agent-breaker ~/.claude/skills/agent-breaker
+git clone https://github.com/MuhammadMurtuzaHussain/agent-breaker ~/.claude/skills/agent-breaker
 ```
 
 ## Scope
