@@ -2,6 +2,8 @@
 
 A red-team playbook for breaking LLM agents — tool-calling, RAG, MCP and memory-backed — in authorised security testing and prompt-injection CTFs such as Lakera's Agent Breaker.
 
+> 📊 **Talk — "Breaking Agents in Dublin":** [view the slides](https://muhammadmurtuzahussain.github.io/agent-breaker/slides/) · [download the deck (.pptx)](https://muhammadmurtuzahussain.github.io/agent-breaker/slides/Breaking-Agents-in-Dublin.pptx)
+
 ## What it covers
 
 - A recon-first workflow and a decision tree for reading an agent's response (blocked / ignored / leaked) and picking the next move
