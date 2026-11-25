@@ -1,0 +1,418 @@
+/* ============================================================================
+   Breaking Agents in Dublin — deck theme
+   Design language from muhammadmurtuza.com (Geist + Geist Mono, warm near-black,
+   single orange accent). Built for reveal.js 5.x at 1920×1080.
+   ========================================================================== */
+
+:root {
+  --bg:        #0D0E0C;  /* warm near-black, page background */
+  --bg2:       #141512;  /* alt section background */
+  --panel:     #1B1C19;  /* cards, window chrome */
+  --hair:      #2C2D29;  /* 1px borders */
+  --cream:     #E9E6DF;  /* primary text */
+  --cream-dim: #BDB9B0;  /* secondary text */
+  --grey:      #86847B;  /* muted labels, mono */
+  --orange:    #F0532D;  /* single accent — use sparingly */
+
+  --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* Type scale (never below 24px) */
+  --t-xl: 120px;
+  --t-lg: 64px;
+  --t-md: 40px;
+  --t-sm: 32px;
+  --t-xs: 24px;
+
+  --pad: 120px;   /* slide inset */
+}
+
+/* ---- Base ---------------------------------------------------------------- */
+.reveal {
+  font-family: var(--sans);
+  font-weight: 400;
+  color: var(--cream);
+  font-size: var(--t-sm);
+  -webkit-font-smoothing: antialiased;
+}
+.reveal-viewport { background: var(--bg); }
+
+.reveal .slides { text-align: left; }
+
+.reveal .slides section {
+  width: 100%;
+  height: 100%;
+  padding: var(--pad);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+.reveal .slides section.alt { background: var(--bg2); }
+
+/* Dotted-grid texture — fixed behind everything, low opacity */
+.reveal-viewport::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(var(--hair) 1.6px, transparent 1.6px);
+  background-size: 32px 32px;
+  opacity: 0.55;            /* dots themselves are already dim (--hair) */
+}
+
+/* Per-slide orange glow — corner set via data-glow on the <section> */
+.reveal .slides section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(60% 55% at var(--glow-x, 85%) var(--glow-y, 15%),
+              rgba(240, 83, 45, 0.20), rgba(240, 83, 45, 0) 70%);
+}
+section[data-glow="tl"] { --glow-x: 12%;  --glow-y: 14%; }
+section[data-glow="tr"] { --glow-x: 88%;  --glow-y: 14%; }
+section[data-glow="bl"] { --glow-x: 12%;  --glow-y: 86%; }
+section[data-glow="br"] { --glow-x: 88%;  --glow-y: 86%; }
+section[data-glow="c"]  { --glow-x: 50%;  --glow-y: 50%; }
+
+/* ---- Typography ---------------------------------------------------------- */
+.reveal h1, .reveal h2, .reveal h3 {
+  font-family: var(--sans);
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-transform: none;
+}
+.reveal h1 { font-size: var(--t-xl); letter-spacing: -0.045em; }
+.reveal h2 { font-size: var(--t-lg); letter-spacing: -0.03em; }
+.reveal h3 { font-size: var(--t-md); letter-spacing: -0.02em; }
+
+.reveal p  { margin: 0; line-height: 1.35; color: var(--cream); }
+.reveal .dim    { color: var(--cream-dim); }
+.reveal .accent { color: var(--orange); }
+.reveal strong  { color: var(--orange); font-weight: 600; }  /* single accent word */
+
+/* Kicker / eyebrow — mono, orange, upper, tracked */
+.kicker {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 36px;
+}
+.kicker.grey { color: var(--grey); }
+
+/* Mono utility (labels, scores, the $ prompt) */
+.mono { font-family: var(--mono); }
+.lead { font-size: var(--t-md); color: var(--cream-dim); line-height: 1.3; }
+.lead strong { color: var(--orange); }
+
+/* Spacing helpers */
+.mt-s  { margin-top: 24px; }
+.mt-m  { margin-top: 48px; }
+.mt-l  { margin-top: 72px; }
+
+/* ---- Lists (build with fragments) --------------------------------------- */
+.reveal ul.clean { list-style: none; margin: 0; padding: 0; }
+.reveal ul.clean li {
+  font-size: var(--t-md);
+  color: var(--cream);
+  padding: 22px 0;
+  border-bottom: 1px solid var(--hair);
+  display: flex;
+  gap: 28px;
+  align-items: baseline;
+}
+.reveal ul.clean li:last-child { border-bottom: 0; }
+.reveal ul.clean li .idx {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  color: var(--orange);
+  min-width: 48px;
+}
+.reveal ul.clean li .sub {
+  display: block;
+  font-size: var(--t-xs);
+  color: var(--cream-dim);
+  margin-top: 8px;
+  line-height: 1.3;
+}
+
+/* ---- Window / terminal chrome (screenshot slots & code) ----------------- */
+.window {
+  background: var(--panel);
+  border: 1px solid var(--hair);
+  border-radius: 14px;
+  overflow: hidden;
+  width: 100%;
+}
+.window .bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--hair);
+  background: rgba(255, 255, 255, 0.015);
+}
+.window .dots { display: flex; gap: 10px; }
+.window .dots i {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--hair); display: block;
+}
+.window .dots i:nth-child(1) { background: #4a4b46; }
+.window .title {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  color: var(--grey);
+  letter-spacing: 0.02em;
+}
+.window .body { padding: 28px 30px; }
+
+/* Code / payload block */
+pre.payload {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 26px;
+  line-height: 1.45;
+  color: var(--cream);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+pre.payload .cmt { color: var(--grey); }
+pre.payload .hot { color: var(--orange); }
+
+/* Empty screenshot frame — awaits a real image the user drops in */
+.shot {
+  position: relative;
+  width: 100%;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  color: var(--grey);
+  background:
+    repeating-linear-gradient(45deg,
+      transparent, transparent 14px,
+      rgba(255,255,255,0.012) 14px, rgba(255,255,255,0.012) 28px);
+}
+.shot .filename {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  color: var(--cream-dim);
+  padding: 10px 18px;
+  border: 1px dashed var(--hair);
+  border-radius: 8px;
+}
+.shot .hint { font-family: var(--mono); font-size: 20px; color: var(--grey); }
+/* When a real screenshot exists, set background-image on .shot and add .filled */
+.shot.filled { background: none; }
+.shot.filled .filename, .shot.filled .hint { display: none; }
+
+/* Real framed screenshot inside window chrome */
+.window .body.flush { padding: 0; }
+.window img.shotimg {
+  display: block;
+  width: 100%;
+  height: 420px;
+  object-fit: contain;
+  object-position: center;
+  background: #0b0c0a;
+}
+.window .bar .score-tag {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 20px;
+  color: var(--orange);
+  letter-spacing: 0.08em;
+}
+
+/* Real payload, shown as a mono caption under a case */
+.payload-line {
+  font-family: var(--mono);
+  font-size: 24px;
+  color: var(--cream-dim);
+  margin-top: 30px;
+  line-height: 1.4;
+  max-width: 1600px;
+}
+.payload-line .lbl { color: var(--grey); text-transform: uppercase; letter-spacing: 0.14em; margin-right: 14px; }
+.payload-line .q { color: var(--orange); }
+
+/* Smaller framed screenshot for case slides that also carry a recon story */
+.window img.shotimg.sm { height: 322px; }
+
+/* ---- Chatbot vs Agent comparison --------------------------------------- */
+.vs { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 56px; }
+.vs .card {
+  border: 1px solid var(--hair);
+  border-radius: 18px;
+  padding: 48px 48px 52px;
+  background: var(--panel);
+}
+.vs .card .tag {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+.vs .card .big { font-size: 56px; font-weight: 600; letter-spacing: -0.03em; margin-top: 22px; line-height: 1.05; }
+.vs .card p { font-size: 28px; color: var(--cream-dim); margin-top: 24px; line-height: 1.42; }
+.vs .card.agent { border-color: rgba(240, 83, 45, 0.45); background: #1b1512; }
+.vs .card.agent .big { color: var(--orange); }
+
+/* ---- Recon progression rows -------------------------------------------- */
+.recon { display: flex; flex-direction: column; gap: 16px; margin-top: 30px; }
+.attempt {
+  display: flex; align-items: center; gap: 28px;
+  border: 1px solid var(--hair);
+  border-radius: 12px;
+  padding: 18px 26px;
+  background: rgba(255, 255, 255, 0.012);
+}
+.attempt .n {
+  font-family: var(--mono); font-size: 20px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--grey); min-width: 72px;
+}
+.attempt .txt { flex: 1; font-family: var(--mono); font-size: 23px; color: var(--cream-dim); line-height: 1.35; }
+.attempt .txt .q { color: var(--cream); }
+.attempt .pill {
+  font-family: var(--mono); font-size: 20px; padding: 8px 16px;
+  border-radius: 999px; border: 1px solid var(--hair); color: var(--grey); white-space: nowrap;
+}
+.attempt.win { border-color: rgba(240, 83, 45, 0.5); background: rgba(240, 83, 45, 0.045); }
+.attempt.win .txt .q { color: var(--orange); }
+.attempt.win .pill { color: var(--orange); border-color: rgba(240, 83, 45, 0.5); }
+
+/* ---- Photo-background slide (the defensive turn) ------------------------ */
+section.photo-bg { padding: var(--pad); }
+section.photo-bg::before { display: none; }           /* photo replaces glow */
+.photoframe.full { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
+.photoframe.full img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.35) contrast(1.05) brightness(0.62); }
+.photoframe.full::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgba(13,14,12,0.92) 0%, rgba(13,14,12,0.62) 42%, rgba(13,14,12,0.12) 100%),
+    radial-gradient(55% 70% at 88% 18%, rgba(240,83,45,0.28), transparent 72%);
+}
+section.photo-bg .over { max-width: 60%; position: relative; }
+
+/* ---- Big question (ethics close) --------------------------------------- */
+.bigq .pre { font-size: var(--t-md); color: var(--cream-dim); line-height: 1.3; margin-bottom: 40px; max-width: 24ch; }
+.bigq h1 { font-size: var(--t-xl); }
+.bigq .afterq {
+  font-family: var(--mono);
+  font-size: 26px;
+  color: var(--grey);
+  margin-top: 56px;
+  letter-spacing: 0.01em;
+}
+
+/* ---- Layout grids -------------------------------------------------------- */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: stretch;
+}
+.grid-2.lean { grid-template-columns: 1.1fr 0.9fr; }
+
+/* Score chip */
+.score {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 14px;
+  font-family: var(--mono);
+  margin-top: 28px;
+}
+.score .n { font-size: var(--t-lg); color: var(--orange); font-weight: 600; letter-spacing: -0.02em; }
+.score .l { font-size: var(--t-xs); color: var(--grey); text-transform: uppercase; letter-spacing: 0.14em; }
+
+/* Tag row */
+.tags { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+.tag {
+  font-family: var(--mono);
+  font-size: 20px;
+  color: var(--cream-dim);
+  padding: 8px 16px;
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+}
+.tag.hot { color: var(--orange); border-color: rgba(240,83,45,0.4); }
+
+/* ---- Statement slide (orange) ------------------------------------------- */
+section.statement {
+  background: var(--orange);
+}
+section.statement::before { display: none; }          /* no glow on solid */
+section.statement h1, section.statement h2 { color: var(--bg); }
+section.statement .kicker { color: rgba(13,14,12,0.6); }
+section.statement p { color: rgba(13,14,12,0.85); }
+section.statement strong { color: var(--bg); }
+
+/* ---- Footer band --------------------------------------------------------- */
+.foot {
+  position: absolute;
+  left: var(--pad);
+  right: var(--pad);
+  bottom: 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  color: var(--grey);
+  letter-spacing: 0.02em;
+}
+.foot .l .accent { color: var(--orange); }
+section.statement .foot { color: rgba(13,14,12,0.55); }
+section.statement .foot .l .accent { color: var(--bg); }
+
+/* ---- Fragments: clean fade-up for "click to appear" --------------------- */
+.reveal .slides section .fragment.fade-up {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal .slides section .fragment.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- reveal chrome recolour --------------------------------------------- */
+.reveal .progress { color: var(--orange); height: 4px; }
+.reveal .controls { color: var(--grey); }
+.reveal .controls .navigate-left.enabled:hover,
+.reveal .controls .navigate-right.enabled:hover { color: var(--orange); }
+.reveal .slide-number {
+  font-family: var(--mono);
+  background: transparent;
+  color: var(--grey);
+}
+
+/* Big title spacing */
+.title-wrap h1 { max-width: 16ch; }
+.title-wrap .sub { font-size: var(--t-md); color: var(--cream-dim); margin-top: 40px; }
+
+/* Speaker line */
+.byline {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 64px;
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  color: var(--grey);
+}
+.byline .me { color: var(--cream); }
+.byline .sep { color: var(--hair); }
